@@ -267,13 +267,13 @@ const HomePage = () => {
       </div>
 
       <div
-        className="fixed bottom-10 right-10 z-20 pointer-events-none text-right hidden md:flex items-center gap-4 transition-opacity duration-300"
+        className="fixed bottom-10 right-10 z-20 pointer-events-none text-right hidden md:flex items-center transition-opacity duration-300"
         style={{ opacity: contentOpacity }}
       >
         {/* Desktop Nav Links */}
-        <nav className="hidden md:flex items-center gap-6 text-[9px] font-mono tracking-[0.2em] text-zinc-400">
-          <a href="#synthesis" className="hover:text-white transition-colors">EVIDENCE MAP</a>
-          <a href="#indexing" className="hover:text-white transition-colors">SEARCH CASES</a>
+        <nav className="flex items-center gap-6 text-[9px] font-mono tracking-[0.2em] text-zinc-400">
+          <a href="#synthesis" className="hover:text-white transition-colors pointer-events-auto">EVIDENCE MAP</a>
+          <a href="#indexing" className="hover:text-white transition-colors pointer-events-auto">SEARCH CASES</a>
           <button 
             onClick={() => navigate("/dashboard")}
             className="hover:text-[#C8A45D] text-[9px] font-mono tracking-[0.2em] transition-colors cursor-pointer text-zinc-400 uppercase font-semibold pointer-events-auto"
@@ -287,12 +287,16 @@ const HomePage = () => {
             WORKSPACE
           </button>
         </nav>
-        <div className="text-right">
-          <span className="text-[9px] uppercase tracking-[0.25em] text-zinc-500 font-medium block">
-            SCROLL DOWN TO SCRUB
-          </span>
+      </div>
 
-        </div>
+      {/* Scroll Down Indicator */}
+      <div
+        className="fixed bottom-10 left-1/2 -translate-x-1/2 z-50 pointer-events-none flex flex-row items-center gap-3 transition-opacity duration-300"
+        style={{ opacity: contentOpacity }}
+      >
+        <span className="text-[10px] uppercase tracking-[0.25em] text-zinc-300 font-medium block text-center">
+          SCROLL DOWN TO SCRUB
+        </span>
         <div className="flex flex-col gap-1 items-center animate-bounce">
           <span className="w-1.5 h-1.5 rounded-full bg-[#C8A45D]" />
           <span className="w-1 h-3 rounded-full bg-[#C8A45D]/40" />
