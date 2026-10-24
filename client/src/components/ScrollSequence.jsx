@@ -11,6 +11,15 @@ const frameModules = import.meta.glob("../assets/frames/*.jpg", { eager: true })
 const framePaths = Object.keys(frameModules).sort();
 const imageUrls = framePaths.map((path) => frameModules[path].default || frameModules[path]);
 
+// Reveal the page as soon as this many frames are usable instead of
+// blocking on the full 192-frame download. The rest keep loading silently.
+const REVEAL_AFTER = 12;
+
+// Cap canvas pixel density. Full devicePixelRatio (2-3x on phones) makes
+// every scroll frame an expensive multi-megapixel canvas draw - the main
+// source of the laggy feel. 1.5 stays sharp while roughly halving that cost.
+const MAX_DPR = 1.5;
+
 /**
  * Helper to draw image on canvas with 'cover' scaling (similar to CSS background-size: cover)
  */
@@ -57,32 +66,37 @@ const ScrollSequence = () => {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
   const loadedImagesRef = useRef([]);
+  const loadedCountRef = useRef(0);
+  const lastDrawnRef = useRef(-1);
+  const rafPendingRef = useRef(false);
 
-  const [loaded, setLoaded] = useState(false);
+  const [ready, setReady] = useState(false);
   const [progress, setProgress] = useState(0);
 
-  // 1. Preload image frames into memory
+  // 1. Progressive preload: reveal after the first frames arrive, keep
+  //    loading the remainder in the background.
   useEffect(() => {
-    let loadedCount = 0;
     const totalFrames = imageUrls.length;
-    const preloadedImages = [];
-
     if (totalFrames === 0) {
-      setLoaded(true);
+      setReady(true);
       return;
     }
 
+    const preloadedImages = new Array(totalFrames);
+    let revealed = false;
+
     imageUrls.forEach((url, index) => {
       const img = new Image();
+      img.decoding = "async";
       img.src = url;
-      
+
       const handleLoad = () => {
-        loadedCount++;
-        setProgress(Math.round((loadedCount / totalFrames) * 100));
-        
-        if (loadedCount === totalFrames) {
-          loadedImagesRef.current = preloadedImages;
-          setLoaded(true);
+        loadedCountRef.current += 1;
+        setProgress(Math.round((loadedCountRef.current / totalFrames) * 100));
+
+        if (!revealed && loadedCountRef.current >= Math.min(REVEAL_AFTER, totalFrames)) {
+          revealed = true;
+          setReady(true);
         }
       };
 
@@ -91,17 +105,21 @@ const ScrollSequence = () => {
       preloadedImages[index] = img;
     });
 
+    loadedImagesRef.current = preloadedImages;
+
     return () => {
       preloadedImages.forEach((img) => {
-        img.onload = null;
-        img.onerror = null;
+        if (img) {
+          img.onload = null;
+          img.onerror = null;
+        }
       });
     };
   }, []);
 
   // 2. Setup GSAP Canvas Scroll trigger
   useEffect(() => {
-    if (!loaded || loadedImagesRef.current.length === 0) return;
+    if (!ready || loadedImagesRef.current.length === 0) return;
 
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -109,23 +127,44 @@ const ScrollSequence = () => {
     const context = canvas.getContext("2d");
     if (!context) return;
 
-    // High-DPI resizing helper
+    // Draw the nearest fully-decoded frame at or below the target index,
+    // so scrubbing never blanks while later frames are still downloading.
+    const drawFrame = (frameIndex) => {
+      const imgs = loadedImagesRef.current;
+      let img = null;
+      for (let i = Math.min(frameIndex, imgs.length - 1); i >= 0; i--) {
+        if (imgs[i] && imgs[i].complete && imgs[i].naturalWidth > 0) {
+          img = imgs[i];
+          break;
+        }
+      }
+      if (!img) {
+        for (let i = frameIndex + 1; i < imgs.length; i++) {
+          if (imgs[i] && imgs[i].complete && imgs[i].naturalWidth > 0) {
+            img = imgs[i];
+            break;
+          }
+        }
+      }
+      if (!img) return;
+      lastDrawnRef.current = frameIndex;
+      drawImageProp(context, img, 0, 0, window.innerWidth, window.innerHeight);
+    };
+
+    // High-DPI resizing helper (density capped for smooth drawing)
     const resizeCanvas = () => {
-      const dpr = window.devicePixelRatio || 1;
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
+      canvas.width = Math.round(window.innerWidth * dpr);
+      canvas.height = Math.round(window.innerHeight * dpr);
       canvas.style.width = `${window.innerWidth}px`;
       canvas.style.height = `${window.innerHeight}px`;
-      context.scale(dpr, dpr);
-      
+      context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
       context.imageSmoothingEnabled = true;
       context.imageSmoothingQuality = "high";
 
       // Redraw current frame
-      const currentFrame = Math.round(imageSeq.frame);
-      if (loadedImagesRef.current[currentFrame]) {
-        drawImageProp(context, loadedImagesRef.current[currentFrame], 0, 0, window.innerWidth, window.innerHeight);
-      }
+      drawFrame(Math.round(imageSeq.frame));
     };
 
     const imageSeq = { frame: 0 };
@@ -142,11 +181,15 @@ const ScrollSequence = () => {
         start: "top top",
         end: "bottom bottom",
         scrub: 0.5,
-        onUpdate: (self) => {
+        onUpdate: () => {
           const frameIndex = Math.round(imageSeq.frame);
-          if (loadedImagesRef.current[frameIndex]) {
-            drawImageProp(context, loadedImagesRef.current[frameIndex], 0, 0, window.innerWidth, window.innerHeight);
-          }
+          // Skip redundant draws and coalesce to one draw per animation frame
+          if (frameIndex === lastDrawnRef.current || rafPendingRef.current) return;
+          rafPendingRef.current = true;
+          requestAnimationFrame(() => {
+            rafPendingRef.current = false;
+            drawFrame(Math.round(imageSeq.frame));
+          });
         },
       },
     });
@@ -162,14 +205,14 @@ const ScrollSequence = () => {
       bgTimeline.kill();
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
-  }, [loaded]);
+  }, [ready]);
 
   // 3. Setup Lenis smooth scrolling & GSAP integration
   useEffect(() => {
-    if (!loaded) return;
+    if (!ready) return;
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // standard expo ease
       orientation: "vertical",
       gestureOrientation: "vertical",
@@ -192,12 +235,12 @@ const ScrollSequence = () => {
       gsap.ticker.remove(gsapTicker);
       lenis.destroy();
     };
-  }, [loaded]);
+  }, [ready]);
 
   return (
     <div ref={containerRef} className="relative w-full min-h-[400vh] bg-black">
-      {/* Absolute minimal loader label */}
-      {!loaded && (
+      {/* Absolute minimal loader label - only until the first frames are usable */}
+      {!ready && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-zinc-950 text-zinc-400 text-xs font-semibold uppercase tracking-widest">
           Loading Sequences ({progress}%)
         </div>
@@ -207,7 +250,7 @@ const ScrollSequence = () => {
       <canvas
         ref={canvasRef}
         className={`fixed inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-          loaded ? "opacity-100" : "opacity-0"
+          ready ? "opacity-100" : "opacity-0"
         } z-0 pointer-events-none`}
       />
     </div>
