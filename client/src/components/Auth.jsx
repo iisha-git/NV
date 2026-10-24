@@ -103,7 +103,7 @@ const Auth = ({ setShowLogin }) => {
             <button
               type="button"
               onClick={() => setShowLogin(false)}
-              className="absolute top-7 left-5 text-gray-500 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
+              className="absolute top-7 left-5 text-gray-400 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
             >
               ← Go Back
             </button>
@@ -112,7 +112,7 @@ const Auth = ({ setShowLogin }) => {
               Login
             </h2>
 
-            <p className="text-center text-gray-500 text-xs font-light mb-2 px-25">
+            <p className="text-center text-gray-400 text-xs font-light mb-2 px-25">
               Welcome back! Please enter your credentials to access your account.
             </p>
 
@@ -124,7 +124,7 @@ const Auth = ({ setShowLogin }) => {
 
                 {/* EMAIL */}
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-500 mb-1.5 font-semibold">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 font-semibold">
                     Enter Email
                   </label>
 
@@ -133,13 +133,13 @@ const Auth = ({ setShowLogin }) => {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-700 font-light"
+                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-400 font-light"
                   />
                 </div>
 
                 {/* PASSWORD */}
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-500 mb-1.5 font-semibold">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 font-semibold">
                     Enter Password
                   </label>
 
@@ -148,7 +148,7 @@ const Auth = ({ setShowLogin }) => {
                     placeholder="Enter your password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
-                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-700 font-light"
+                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-400 font-light"
                   />
                 </div>
 
@@ -162,7 +162,7 @@ const Auth = ({ setShowLogin }) => {
 
                 {/* SWITCH */}
                 <div className="flex items-center justify-center mt-4 mb-10">
-                  <span className="text-xs font-light text-gray-500">
+                  <span className="text-xs font-light text-gray-400">
                     Don't have an account?
                   </span>
 
@@ -187,7 +187,7 @@ const Auth = ({ setShowLogin }) => {
             <button
               type="button"
               onClick={() => setShowLogin(false)}
-              className="absolute top-7 left-5 text-gray-500 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
+              className="absolute top-7 left-5 text-gray-400 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
             >
               ← Go Back
             </button>
@@ -204,7 +204,7 @@ const Auth = ({ setShowLogin }) => {
 
                 {/* NAME */}
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-500 mb-1.5 font-semibold">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 font-semibold">
                     Enter Name
                   </label>
                   <input
@@ -212,13 +212,13 @@ const Auth = ({ setShowLogin }) => {
                     placeholder="Enter your name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-700 font-light"
+                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-400 font-light"
                   />
                 </div>
 
                 {/* EMAIL */}
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-500 mb-1.5 font-semibold">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 font-semibold">
                     Enter Email
                   </label>
                   <input
@@ -226,13 +226,13 @@ const Auth = ({ setShowLogin }) => {
                     placeholder="Enter your email"
                     value={registerEmail}
                     onChange={(e) => setRegisterEmail(e.target.value)}
-                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-700 font-light"
+                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-400 font-light"
                   />
                 </div>
 
                 {/* PASSWORD */}
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-500 mb-1.5 font-semibold">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 font-semibold">
                     Create Password
                   </label>
                   <input
@@ -240,13 +240,13 @@ const Auth = ({ setShowLogin }) => {
                     placeholder="Create password"
                     value={registerPassword}
                     onChange={(e) => setRegisterPassword(e.target.value)}
-                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-700 font-light"
+                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-400 font-light"
                   />
                 </div>
 
                 {/* CONFIRM PASSWORD */}
                 <div>
-                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-500 mb-1.5 font-semibold">
+                  <label className="block text-[10px] font-mono uppercase tracking-wider text-gray-400 mb-1.5 font-semibold">
                     Confirm Password
                   </label>
                   <input
@@ -254,7 +254,7 @@ const Auth = ({ setShowLogin }) => {
                     placeholder="Confirm password"
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-700 font-light"
+                    className="w-full bg-black border border-zinc-800 text-white text-xs font-serif tracking-normal p-3 rounded focus:outline-none focus:border-[#c5a059] transition-all placeholder:text-gray-400 font-light"
                   />
                 </div>
 
@@ -268,7 +268,7 @@ const Auth = ({ setShowLogin }) => {
 
                 {/* SWITCH */}
                 <div className="flex items-center justify-center mt-4 mb-10">
-                  <span className="text-xs font-light text-gray-500">
+                  <span className="text-xs font-light text-gray-400">
                     Already have an account?
                   </span>
 
