@@ -374,9 +374,9 @@ const DashboardPage = () => {
             </h1>
           </div>
           <p className="text-zinc-400 text-xs font-sans font-light mt-2 max-w-3xl leading-relaxed">
-            Interact directly with parsed criminal and commercial case profiles.
-            Track corroboration states, contradiction severity ratios, and court
-            tendencies.
+            Review case profiles compiled from your uploaded briefs. Track
+            corroboration states, contradiction severity ratios, and similarity
+            matches from a pilot dataset.
           </p>
         </div>
 
@@ -812,9 +812,9 @@ const DashboardPage = () => {
                       </h2>
                     </div>
                     <p className="text-zinc-500 text-xs font-light mb-8 font-sans">
-                      Semantic indexing of historical trial logs and Supreme
-                      Court precedents calculated using multidimensional cosine
-                      matching indices.
+                      Semantic similarity search over a pilot dataset of past
+                      case summaries, ranked by cosine score. Matches are
+                      retrieval results, not predictions.
                     </p>
 
                     <div className="space-y-5">
