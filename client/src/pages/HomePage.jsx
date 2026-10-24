@@ -6,6 +6,7 @@ import StatueHotspots from "../components/StatueHotspots";
 import Auth from "../components/Auth";
 import useAuthStore from "../store/useAuthStore";
 import { PreviewDemoModal } from "../components/PreviewDemoModal";
+import LandingSections from "../components/LandingSections";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -40,6 +41,18 @@ const HomePage = () => {
 
       {/* 1. Dynamic Canvas Background Sequence */}
       <ScrollSequence />
+
+      {/* 1b. Presentable content sections after the scroll sequence */}
+      <LandingSections
+        onGetStarted={() => {
+          if (isAuthenticated) {
+            navigate("/workspace");
+          } else {
+            setShowAuth(true);
+          }
+        }}
+        onPreviewDemo={() => setShowDemo(true)}
+      />
 
       {/* 2. Premium Layered Cinematic Overlay */}
       <CinematicOverlay />
