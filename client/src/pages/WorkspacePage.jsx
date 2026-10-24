@@ -120,7 +120,7 @@ const WorkspacePage = () => {
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#C8A45D]/5 rounded-full blur-[150px] pointer-events-none" />
 
       {/* Floating navigation header */}
-      <header className="max-w-7xl mx-auto flex items-center justify-between pb-6 border-b border-zinc-900/60 mb-8 relative z-10">
+      <header className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-y-3 pb-6 border-b border-zinc-900/60 mb-8 relative z-10">
         <Link to="/" className="flex items-center gap-3 group">
           <svg className="w-7 h-7 text-[#C8A45D] transition-transform group-hover:scale-105" viewBox="0 0 100 100" fill="none">
             <path d="M50 25V75M50 75H60M50 75H40" stroke="currentColor" strokeWidth="3.5" strokeLinecap="round" />
@@ -134,8 +134,8 @@ const WorkspacePage = () => {
           </span>
         </Link>
         
-        <div className="flex items-center gap-6">
-          <nav className="flex items-center gap-5 bg-zinc-950/50 border border-zinc-900 px-6 py-2.5 rounded-full backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
+        <div className="flex items-center gap-3 md:gap-6 flex-wrap">
+          <nav className="flex items-center gap-4 md:gap-5 bg-zinc-950/50 border border-zinc-900 px-3 md:px-6 py-2.5 rounded-full backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.4)]">
             <Link 
               to="/dashboard" 
               className="text-xs font-mono tracking-widest text-zinc-400 hover:text-white hover:scale-105 transition-all uppercase"
