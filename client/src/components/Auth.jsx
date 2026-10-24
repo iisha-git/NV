@@ -88,11 +88,17 @@ const Auth = ({ setShowLogin }) => {
 
   return (
     <>
-      <div className="pointer-events-auto login-card justify-center inset-0 z-50">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black relative overflow-hidden px-6 py-12">
+      <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C8A45D]/[0.06] rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#C8A45D]/[0.05] rounded-full blur-[160px] pointer-events-none" />
+      <div className="relative z-10 flex flex-col items-center mb-10 select-none">
+        <span className="text-[#C8A45D] text-sm font-serif tracking-[0.4em] uppercase font-bold">NyayVivek</span>
+        <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-[0.3em] mt-2">Autonomous Legal Intelligence Cockpit</span>
+      </div>
 
         {/* LOGIN CARD */}
         {!isRegistering && (
-          <div className="rounded-xl border mt-20 ml-20 w-lg border-[#c5a059]/10 bg-gradient-to-b from-[#0b0b0b] to-[#040404] transition-all duration-500 flex flex-col hover:border-[#c5a059]/40 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.85)]">
+          <div className="rounded-2xl border w-full max-w-lg relative z-10 border-[#c5a059]/15 bg-gradient-to-b from-[#0b0b0b] to-[#040404] transition-all duration-500 flex flex-col hover:border-[#c5a059]/40 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.85)]">
 
             <button
               type="button"
@@ -176,7 +182,7 @@ const Auth = ({ setShowLogin }) => {
 
         {/* REGISTER CARD */}
         {isRegistering && (
-          <div className="rounded-xl border mt-20 ml-20 w-lg border-[#c5a059]/10 bg-gradient-to-b from-[#0b0b0b] to-[#040404] transition-all duration-500 flex flex-col hover:border-[#c5a059]/40 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.85)]">
+          <div className="rounded-2xl border w-full max-w-lg relative z-10 border-[#c5a059]/15 bg-gradient-to-b from-[#0b0b0b] to-[#040404] transition-all duration-500 flex flex-col hover:border-[#c5a059]/40 hover:-translate-y-1.5 hover:shadow-[0_15px_35px_rgba(0,0,0,0.85)]">
 
             <button
               type="button"
