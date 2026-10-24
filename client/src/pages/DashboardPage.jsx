@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import useAuthStore from "../store/useAuthStore";
 import { useToast } from "../components/ToastContext";
+import { syntheticPreviewCase } from "../data/syntheticPreview";
 
 const DashboardPage = () => {
   const navigate = useNavigate();
@@ -20,6 +21,9 @@ const DashboardPage = () => {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [selectedMapNode, setSelectedMapNode] = useState(null);
 
+  // Clearly-labeled synthetic preview mode (?preview=synthetic) for offline UI demonstration
+  const isSyntheticPreview = new URLSearchParams(window.location.search).get("preview") === "synthetic";
+
   // Reset node inspector selection on case switch
   useEffect(() => {
     setSelectedMapNode(null);
@@ -28,6 +32,12 @@ const DashboardPage = () => {
   // Dynamic Case Retrieval from MongoDB exclusively (No fallback mock data)
   useEffect(() => {
     const fetchDossiers = async () => {
+      if (isSyntheticPreview) {
+        setCases([syntheticPreviewCase]);
+        setSelectedCaseId(syntheticPreviewCase.id);
+        setLoading(false);
+        return;
+      }
       try {
         const response = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers`, {
           withCredentials: true
@@ -273,6 +283,11 @@ const DashboardPage = () => {
 
   return (
     <div className="min-h-screen bg-black text-white p-6 relative overflow-hidden font-sans select-none">
+      {isSyntheticPreview && (
+        <div className="relative z-20 max-w-7xl mx-auto mb-6 border border-[#C8A45D]/40 bg-[#C8A45D]/10 text-[#C8A45D] text-[10px] font-mono tracking-[0.18em] uppercase px-5 py-3 rounded-xl">
+          Synthetic preview - fictional sample data for UI demonstration while the backend is offline. Nothing shown is a real case or a real result.
+        </div>
+      )}
       {/* 1. Cinematic Radial Amber Glowing Backlights */}
       <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-[#C8A45D]/5 rounded-full blur-[180px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#C8A45D]/5 rounded-full blur-[180px] pointer-events-none" />
