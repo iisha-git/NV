@@ -274,9 +274,6 @@ const HomePage = () => {
         <span className="text-[9px] uppercase tracking-[0.3em] text-[#C8A45D] font-medium block">
           AI ASSISTANT
         </span>
-        <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-widest mt-1 block">
-          SECURE & ENCRYPTED
-        </span>
       </div>
 
       <div
