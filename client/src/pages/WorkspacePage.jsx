@@ -154,7 +154,7 @@ const WorkspacePage = () => {
           <button 
             type="button"
             onClick={handleLogout}
-            className="text-xs font-mono tracking-widest text-zinc-500 hover:text-red-400 border border-zinc-900 hover:border-red-950/40 hover:bg-red-950/15 px-5 py-2.5 rounded-full transition-all uppercase cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_15px_rgba(239,68,68,0.15)]"
+            className="text-xs font-mono tracking-widest text-zinc-400 hover:text-red-400 border border-zinc-900 hover:border-red-950/40 hover:bg-red-950/15 px-5 py-2.5 rounded-full transition-all uppercase cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_15px_rgba(239,68,68,0.15)]"
           >
             LOGOUT
           </button>
@@ -178,7 +178,7 @@ const WorkspacePage = () => {
             
             {/* Case Title */}
             <div className="flex flex-col gap-1.5">
-              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-500 font-bold">
+              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
                 Case Title / Litigation Parties
               </label>
               <input
@@ -187,13 +187,13 @@ const WorkspacePage = () => {
                 value={caseTitle}
                 onChange={(e) => setCaseTitle(e.target.value)}
                 placeholder="e.g. State of UP v. Ravindra & Ors"
-                className="w-full bg-black border border-zinc-900 text-white text-xs font-sans p-4 rounded focus:outline-none focus:border-[#C8A45D] focus:ring-1 focus:ring-[#C8A45D]/20 transition-all placeholder:text-zinc-800 font-light"
+                className="w-full bg-black border border-zinc-900 text-white text-xs font-sans p-4 rounded focus:outline-none focus:border-[#C8A45D] focus:ring-1 focus:ring-[#C8A45D]/20 transition-all placeholder:text-zinc-400 font-light"
               />
             </div>
 
             {/* Court Jurisdiction */}
             <div className="flex flex-col gap-1.5">
-              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-500 font-bold">
+              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
                 Court Jurisdiction
               </label>
               <input
@@ -201,13 +201,13 @@ const WorkspacePage = () => {
                 value={jurisdiction}
                 onChange={(e) => setJurisdiction(e.target.value)}
                 placeholder="e.g. Supreme Court"
-                className="w-full bg-black border border-zinc-900 text-white text-xs font-sans p-4 rounded focus:outline-none focus:border-[#C8A45D] focus:ring-1 focus:ring-[#C8A45D]/20 transition-all placeholder:text-zinc-800 font-light"
+                className="w-full bg-black border border-zinc-900 text-white text-xs font-sans p-4 rounded focus:outline-none focus:border-[#C8A45D] focus:ring-1 focus:ring-[#C8A45D]/20 transition-all placeholder:text-zinc-400 font-light"
               />
             </div>
 
             {/* Case Classification Category Dropdown */}
             <div className="flex flex-col gap-1.5 relative">
-              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-500 font-bold">
+              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
                 Case Category
               </label>
               <div className="relative">
@@ -232,7 +232,7 @@ const WorkspacePage = () => {
 
             {/* Strategic Notes Textarea */}
             <div className="flex flex-col gap-1.5">
-              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-500 font-bold">
+              <label className="block text-[9px] font-mono uppercase tracking-wider text-zinc-400 font-bold">
                 Case Notes (Optional)
               </label>
               <textarea
@@ -240,7 +240,7 @@ const WorkspacePage = () => {
                 value={counselNotes}
                 onChange={(e) => setCounselNotes(e.target.value)}
                 placeholder="Provide additional details such as witness statements, timeline facts, or general notes to include in the case analysis..."
-                className="w-full bg-black border border-zinc-900 text-white text-xs font-sans p-4 rounded focus:outline-none focus:border-[#C8A45D] focus:ring-1 focus:ring-[#C8A45D]/20 transition-all placeholder:text-zinc-700 font-light leading-relaxed resize-none"
+                className="w-full bg-black border border-zinc-900 text-white text-xs font-sans p-4 rounded focus:outline-none focus:border-[#C8A45D] focus:ring-1 focus:ring-[#C8A45D]/20 transition-all placeholder:text-zinc-400 font-light leading-relaxed resize-none"
               />
             </div>
 
@@ -261,7 +261,7 @@ const WorkspacePage = () => {
                   Upload Case Documents
                 </h2>
               </div>
-              <span className="text-xs font-mono text-zinc-500 tracking-wider">
+              <span className="text-xs font-mono text-zinc-400 tracking-wider">
                 <span className="text-[#C8A45D] font-bold">{stagedFiles.length}</span> file(s) selected
               </span>
             </div>
@@ -278,7 +278,7 @@ const WorkspacePage = () => {
               <p className="text-sm font-serif text-white mb-1">
                 Drag PDF documents here to upload
               </p>
-              <p className="text-zinc-600 text-[11px] leading-relaxed max-w-xs">
+              <p className="text-zinc-500 text-[11px] leading-relaxed max-w-xs">
                 Supports standard PDF briefs. Upload multiple PDFs to run the AI analysis.
               </p>
               <input 
@@ -319,7 +319,7 @@ const WorkspacePage = () => {
             {/* Staging Document list queue */}
             <div className="mt-8 space-y-2.5 max-h-[220px] overflow-y-auto pr-2 custom-scrollbar">
               {stagedFiles.length === 0 ? (
-                <p className="text-zinc-600 text-xs font-light text-center py-6 font-mono">
+                <p className="text-zinc-500 text-xs font-light text-center py-6 font-mono">
                   No files staged. Drag and drop or browse files to begin.
                 </p>
               ) : (
@@ -352,7 +352,7 @@ const WorkspacePage = () => {
                       {/* Delete button */}
                       <button
                         onClick={() => removeFile(file.id, file.name)}
-                        className="text-zinc-500 hover:text-red-400 p-1.5 transition-colors cursor-pointer rounded hover:bg-red-500/10"
+                        className="text-zinc-400 hover:text-red-400 p-1.5 transition-colors cursor-pointer rounded hover:bg-red-500/10"
                         title="Remove file"
                       >
                         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -412,7 +412,7 @@ const WorkspacePage = () => {
               />
             </div>
             
-            <div className="flex justify-between items-center mt-3 text-[10px] font-mono text-zinc-500">
+            <div className="flex justify-between items-center mt-3 text-[10px] font-mono text-zinc-400">
               <span>NYAYVIVEK // CORE ENGINE</span>
               <span className="text-[#C8A45D] font-bold">{analysisProgress}%</span>
             </div>
