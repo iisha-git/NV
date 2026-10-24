@@ -128,6 +128,10 @@ const DashboardPage = () => {
 
   const handleDeleteCase = () => {
     if (!activeCase || !activeCase.id) return;
+    if (isSyntheticPreview) {
+      showToast("Synthetic preview - delete is disabled for fictional sample data.", "info");
+      return;
+    }
     setShowDeleteConfirm(true);
   };
 
@@ -647,8 +651,10 @@ const DashboardPage = () => {
                           </thead>
                           <tbody className="divide-y divide-zinc-900/40">
                             {activeCase.indexed_files.map((file, idx) => {
-                              const isRealFile = file.id && !file.id.startsWith('file-');
-                              const downloadUrl = `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers/${activeCase.id}/files/${file.id}`;
+                              const isRealFile = isSyntheticPreview ? true : (file.id && !file.id.startsWith('file-'));
+                              const downloadUrl = isSyntheticPreview
+                                ? `/samples/${file.name}`
+                                : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers/${activeCase.id}/files/${file.id}`;
                               
                               return (
                                 <tr
