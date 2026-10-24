@@ -30,7 +30,7 @@ const CinematicOverlay = () => {
   const goldShiftY = scrollProgress * 100; // Drifts downward on scroll
 
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-10">
+    <div className="absolute top-0 left-0 w-full pointer-events-none overflow-hidden z-10" style={{ height: "400vh" }}>
       
       {/* LAYER 1: DEEP LUXURY BLACK BASE MAP */}
       <div className="absolute inset-0 bg-black/40 z-[1]" />
