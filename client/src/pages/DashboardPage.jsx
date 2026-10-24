@@ -355,7 +355,7 @@ const DashboardPage = () => {
           <button
             type="button"
             onClick={handleLogout}
-            className="text-xs font-mono tracking-widest text-zinc-500 hover:text-red-400 border border-zinc-900 hover:border-red-950/40 hover:bg-red-950/15 px-5 py-2.5 rounded-full transition-all uppercase cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_15px_rgba(239,68,68,0.15)]"
+            className="text-xs font-mono tracking-widest text-zinc-400 hover:text-red-400 border border-zinc-900 hover:border-red-950/40 hover:bg-red-950/15 px-5 py-2.5 rounded-full transition-all uppercase cursor-pointer shadow-[0_4px_15px_rgba(0,0,0,0.3)] hover:shadow-[0_0_15px_rgba(239,68,68,0.15)]"
           >
             LOGOUT
           </button>
@@ -383,7 +383,7 @@ const DashboardPage = () => {
         {/* Dynamic Boxed Case Selector with Purge Option */}
         <div className="flex items-center gap-3">
           <div className="flex items-center bg-[#050505] border border-[#C8A45D]/20 px-5 py-3 rounded-lg shadow-[0_4px_20px_rgba(0,0,0,0.9)] relative group hover:border-[#C8A45D]/40 transition-all min-w-[280px]">
-            <span className="text-[10px] font-mono text-zinc-500 tracking-[0.2em] mr-3 shrink-0 uppercase font-semibold">
+            <span className="text-[10px] font-mono text-zinc-400 tracking-[0.2em] mr-3 shrink-0 uppercase font-semibold">
               CASE FILE:
             </span>
             <div className="relative flex-1">
@@ -471,7 +471,7 @@ const DashboardPage = () => {
 
             <div className="flex items-center justify-between mb-2">
               <span className="border border-[#c5a059]/40 bg-[#c5a059]/5 text-[9px] font-mono uppercase text-[#c5a059] font-bold px-3 py-1 rounded tracking-wider">
-                FULLY PROCESSED
+                {isSyntheticPreview ? "SYNTHETIC SAMPLE" : "FULLY PROCESSED"}
               </span>
             </div>
 
@@ -480,7 +480,7 @@ const DashboardPage = () => {
             </h2>
 
             <div className="flex items-center justify-between mt-4 pt-3.5 border-t border-zinc-900/60 gap-4">
-              <div className="text-[10px] font-mono text-zinc-500 flex flex-wrap gap-2 items-center">
+              <div className="text-[10px] font-mono text-zinc-400 flex flex-wrap gap-2 items-center">
                 <span className="text-[#C8A45D]/90 font-medium">
                   {activeCase.filing_index}
                 </span>
@@ -519,7 +519,7 @@ const DashboardPage = () => {
                 >
                   <div className="flex items-center gap-3">
                     <span
-                      className={`text-sm ${isActive ? "text-[#C8A45D]" : "text-zinc-500"}`}
+                      className={`text-sm ${isActive ? "text-[#C8A45D]" : "text-zinc-400"}`}
                     >
                       {tab.icon}
                     </span>
@@ -548,7 +548,7 @@ const DashboardPage = () => {
           {/* Sidebar Footer Stats (Matched to reference) */}
           <div className="bg-gradient-to-r from-zinc-950 to-zinc-900 border border-zinc-900/60 rounded-xl p-5 flex flex-col gap-3">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 font-semibold">
+              <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-400 font-semibold">
                 Documents Indexed
               </span>
               <span className="text-xs font-mono text-white font-bold">
@@ -609,7 +609,7 @@ const DashboardPage = () => {
                     {/* Metadata boxes */}
                     <div className="grid grid-cols-1  sm:grid-cols-3 gap-4 mb-8">
                       <div className="border border-zinc-900/80 bg-zinc-950/20 p-4 rounded-xl">
-                        <span className="text-[8px] font-mono text-zinc-500 tracking-wider uppercase block">
+                        <span className="text-[8px] font-mono text-zinc-400 tracking-wider uppercase block">
                           JURISDICTION VENUE
                         </span>
                         <span className="text-[11px] font-sans text-[#C8A45D] mt-1.5 block select-text font-normal leading-relaxed">
@@ -618,7 +618,7 @@ const DashboardPage = () => {
                       </div>
 
                       <div className="border border-zinc-900/80 bg-zinc-950/20 p-4 rounded-xl">
-                        <span className="text-[8px] font-mono text-zinc-500 tracking-wider uppercase block">
+                        <span className="text-[8px] font-mono text-zinc-400 tracking-wider uppercase block">
                           DATE LOGGED
                         </span>
                         <span className="text-[11px] font-sans text-[#C8A45D]/80 mt-1.5 block select-text font-normal">
@@ -636,7 +636,7 @@ const DashboardPage = () => {
                       <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                           <thead>
-                            <tr className="border-b border-zinc-900 text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
+                            <tr className="border-b border-zinc-900 text-[9px] font-mono text-zinc-400 uppercase tracking-widest">
                               <th className="pb-3.5 font-bold">
                                 DOCUMENT NAME & METADATA
                               </th>
@@ -657,7 +657,7 @@ const DashboardPage = () => {
                                 >
                                   <td className="py-4 pr-3 flex items-start gap-3">
                                     <svg
-                                      className="w-4 h-4 text-zinc-500 shrink-0 mt-0.5"
+                                      className="w-4 h-4 text-zinc-400 shrink-0 mt-0.5"
                                       fill="none"
                                       viewBox="0 0 24 24"
                                       stroke="currentColor"
@@ -673,7 +673,7 @@ const DashboardPage = () => {
                                       <span className="text-xs text-white font-medium select-text truncate max-w-[240px] md:max-w-xs block leading-tight">
                                         {file.name}
                                       </span>
-                                      <span className="text-[9px] font-mono text-zinc-500 mt-1 block select-none">
+                                      <span className="text-[9px] font-mono text-zinc-400 mt-1 block select-none">
                                         {file.size > 0 ? formatSize(file.size) : '0 KB'} • Uploaded: {file.uploadedAt || 'N/A'}
                                       </span>
                                     </div>
@@ -692,7 +692,7 @@ const DashboardPage = () => {
                                         <a
                                           href={`${downloadUrl}?download=true`}
                                           download
-                                          className="inline-flex items-center gap-1 text-[9px] font-mono tracking-widest text-zinc-500 hover:text-white border border-zinc-900 hover:border-zinc-700 hover:bg-zinc-950 px-3.5 py-1.5 rounded transition-all uppercase font-bold cursor-pointer"
+                                          className="inline-flex items-center gap-1 text-[9px] font-mono tracking-widest text-zinc-400 hover:text-white border border-zinc-900 hover:border-zinc-700 hover:bg-zinc-950 px-3.5 py-1.5 rounded transition-all uppercase font-bold cursor-pointer"
                                         >
                                           DOWNLOAD
                                         </a>
@@ -747,7 +747,7 @@ const DashboardPage = () => {
                         Predicted Statutes & Provisions
                       </h2>
                     </div>
-                    <p className="text-zinc-500 text-xs font-light mb-8 font-sans">
+                    <p className="text-zinc-400 text-xs font-light mb-8 font-sans">
                       Semantic intelligence mapping of Indian Penal Code (IPC)
                       and statutory legal provisions predicted for matching
                       briefs.
@@ -770,7 +770,7 @@ const DashboardPage = () => {
                               </span>
                               {confidence !== null && (
                                 <span className="text-[9px] font-mono text-[#C8A45D] font-semibold bg-[#C8A45D]/5 border border-[#C8A45D]/25 px-2 py-0.5 rounded shadow-[0_2px_8px_rgba(200,164,93,0.05)]">
-                                  {confidence}% MATCH
+                                  {isSyntheticPreview ? `${confidence}% SAMPLE` : `${confidence}% MATCH`}
                                 </span>
                               )}
                             </div>
@@ -779,7 +779,7 @@ const DashboardPage = () => {
                               {sectionStr}
                             </h3>
 
-                            <div className="mt-4 pt-4 border-t border-zinc-900 flex items-center justify-between text-[9px] font-mono text-zinc-500">
+                            <div className="mt-4 pt-4 border-t border-zinc-900 flex items-center justify-between text-[9px] font-mono text-zinc-400">
                               <span>COGNIZABILITY: COGNIZABLE</span>
                               <span>ACTION: WARRANT ARREST</span>
                             </div>
@@ -811,7 +811,7 @@ const DashboardPage = () => {
                         Jurisprudence Retrieval Engine
                       </h2>
                     </div>
-                    <p className="text-zinc-500 text-xs font-light mb-8 font-sans">
+                    <p className="text-zinc-400 text-xs font-light mb-8 font-sans">
                       Semantic similarity search over a pilot dataset of past
                       case summaries, ranked by cosine score. Matches are
                       retrieval results, not predictions.
@@ -824,8 +824,8 @@ const DashboardPage = () => {
                           className="flex flex-col md:flex-row items-stretch border border-zinc-900 bg-black/40 rounded-xl overflow-hidden hover:border-[#C8A45D]/25 transition-all duration-300 group hover:-translate-y-0.5"
                         >
                           <div className="md:w-32 bg-zinc-950 border-r border-zinc-900 p-5 flex flex-col items-center justify-center text-center">
-                            <span className="text-[8px] font-mono text-zinc-500 uppercase block mb-1">
-                              COSINE SCORE
+                            <span className="text-[8px] font-mono text-zinc-400 uppercase block mb-1">
+                              {isSyntheticPreview ? "SAMPLE SCORE" : "COSINE SCORE"}
                             </span>
                             <span className="text-2xl font-serif text-[#C8A45D] font-bold block">
                               {Number(caseItem.similarity_score) > 1 
@@ -833,7 +833,7 @@ const DashboardPage = () => {
                                 : (Number(caseItem.similarity_score) * 100).toFixed(0)}%
                             </span>
                             <span className="text-[8px] font-mono text-[#C8A45D] font-semibold block mt-1">
-                              MATCH
+                              {isSyntheticPreview ? "SAMPLE" : "MATCH"}
                             </span>
 
                             <div className="w-full bg-zinc-900 h-1 rounded-full mt-3 overflow-hidden">
@@ -849,7 +849,7 @@ const DashboardPage = () => {
                           </div>
 
                           <div className="flex-1 p-6 relative">
-                            <div className="absolute top-4 right-4 text-[9px] font-mono bg-zinc-950 px-2 py-0.5 text-zinc-500 rounded uppercase">
+                            <div className="absolute top-4 right-4 text-[9px] font-mono bg-zinc-950 px-2 py-0.5 text-zinc-400 rounded uppercase">
                               PRECEDENT RECORD
                             </div>
                             <h3 className="text-base font-serif text-white mb-2 font-medium tracking-wide select-text">
@@ -901,7 +901,7 @@ const DashboardPage = () => {
                               Judgment Pattern Trends
                             </h2>
                           </div>
-                          <p className="text-zinc-500 text-xs font-light">
+                          <p className="text-zinc-400 text-xs font-light">
                             Statistical courtroom analytics and predicted outcome metrics modeled against relevant historical case files.
                           </p>
                         </div>
@@ -933,7 +933,7 @@ const DashboardPage = () => {
 
                           {/* Case Type Box */}
                           <div className="mb-8 bg-[#070707] border border-zinc-900 p-5 rounded-2xl flex items-center justify-between shadow-[inset_0_2px_6px_rgba(0,0,0,0.8)] select-none">
-                            <span className="text-[10px] font-mono text-zinc-500 uppercase tracking-[0.22em] font-bold">
+                            <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-[0.22em] font-bold">
                               CASE TYPE:
                             </span>
                             <span className="text-xs font-serif text-[#C8A45D] font-extrabold uppercase tracking-[0.15em] bg-[#1b1103]/60 border border-[#C8A45D]/35 px-5 py-2 rounded-xl shadow-[0_2px_8px_rgba(200,164,93,0.1)]">
@@ -1020,7 +1020,7 @@ const DashboardPage = () => {
                         Audit Warnings: Missing Evidence
                       </h2>
                     </div>
-                    <p className="text-zinc-500 text-xs font-light mb-8 font-sans">
+                    <p className="text-zinc-400 text-xs font-light mb-8 font-sans">
                       Automated index verification against Indian Evidence Act
                       (IEA) standards highlighting structural voids in legal
                       corroboration.
@@ -1084,7 +1084,7 @@ const DashboardPage = () => {
                           Investigative Operations Workflows
                         </h2>
                       </div>
-                      <p className="text-zinc-500 text-xs font-light mb-8 font-sans">
+                      <p className="text-zinc-400 text-xs font-light mb-8 font-sans">
                         Targeted procedural step recommendations to mitigate identified evidentiary gaps and prepare courtroom submissions.
                       </p>
 
@@ -1110,12 +1110,12 @@ const DashboardPage = () => {
                                 </span>
                                 <div>
                                   <span
-                                    className={`text-[8px] font-mono font-bold uppercase tracking-wider block mb-1 ${isDone ? "text-emerald-500" : "text-zinc-500"}`}
+                                    className={`text-[8px] font-mono font-bold uppercase tracking-wider block mb-1 ${isDone ? "text-emerald-500" : "text-zinc-400"}`}
                                   >
                                     TARGETED INVESTIGATION ACTION ITEM
                                   </span>
                                   <p
-                                    className={`text-sm font-sans font-light select-text transition-all ${isDone ? "text-zinc-500 line-through" : "text-zinc-200"}`}
+                                    className={`text-sm font-sans font-light select-text transition-all ${isDone ? "text-zinc-400 line-through" : "text-zinc-200"}`}
                                   >
                                     {action}
                                   </p>
@@ -1153,7 +1153,7 @@ const DashboardPage = () => {
 
           {/* RIGHT COLUMN: Footer buttons wrapper */}
           <div className="flex flex-col sm:flex-row items-center justify-between border-t border-zinc-900 pt-6 mt-8 gap-4 select-none">
-            <span className="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
+            <span className="text-[9px] font-mono text-zinc-500 uppercase tracking-widest">
               NyayVivek Core Index • Mapped in deep dark precision
             </span>
             <div className="flex items-center gap-4 w-full sm:w-auto">
@@ -1206,13 +1206,13 @@ const DashboardPage = () => {
               
               {/* Header Icon + Label */}
               <div className="flex items-center gap-3.5 mb-5 border-b border-zinc-900/60 pb-4">
-                <div className="w-10 h-10 rounded-xl bg-zinc-950/80 border border-zinc-900 flex items-center justify-center text-zinc-500">
+                <div className="w-10 h-10 rounded-xl bg-zinc-950/80 border border-zinc-900 flex items-center justify-center text-zinc-400">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                   </svg>
                 </div>
                 <div>
-                  <span className="text-[9px] font-mono font-bold tracking-[0.25em] text-zinc-500 block uppercase mb-0.5">
+                  <span className="text-[9px] font-mono font-bold tracking-[0.25em] text-zinc-400 block uppercase mb-0.5">
                     SYSTEM ACTION
                   </span>
                   <h3 className="text-base font-serif text-zinc-100 font-semibold tracking-wide">
@@ -1228,16 +1228,16 @@ const DashboardPage = () => {
               
               {/* Consequences details */}
               <div className="bg-[#0b0b0b]/60 border border-zinc-900/40 p-4 rounded-xl mb-6">
-                <h4 className="text-[10px] font-mono font-bold tracking-wider text-zinc-500 mb-2.5 uppercase">
+                <h4 className="text-[10px] font-mono font-bold tracking-wider text-zinc-400 mb-2.5 uppercase">
                   Evidentiary purging list:
                 </h4>
                 <ul className="space-y-2.5">
                   <li className="flex items-start gap-2.5 text-[11px] font-sans text-zinc-400 leading-relaxed">
-                    <span className="text-zinc-600 mt-1 shrink-0">•</span>
+                    <span className="text-zinc-500 mt-1 shrink-0">•</span>
                     <span>All dynamic case summaries, timeline analyses, and matching indexes inside MongoDB.</span>
                   </li>
                   <li className="flex items-start gap-2.5 text-[11px] font-sans text-zinc-400 leading-relaxed">
-                    <span className="text-zinc-600 mt-1 shrink-0">•</span>
+                    <span className="text-zinc-500 mt-1 shrink-0">•</span>
                     <span>All original digital PDF briefs, folders, and evidence files stored on the local server filesystem.</span>
                   </li>
                 </ul>
