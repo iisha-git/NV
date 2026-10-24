@@ -101,25 +101,7 @@ const LandingSections = ({ onGetStarted, onPreviewDemo }) => {
                 <h3 className="font-serif text-lg mb-3 tracking-tight">{feature.title}</h3>
                 <p className="text-zinc-500 text-sm leading-relaxed font-light">{feature.desc}</p>
               </div>
-            ))}
-
-            {/* Honest scope card */}
-            <div className="border border-[#C8A45D]/25 bg-[#C8A45D]/[0.04] rounded-2xl p-8">
-              <div className="w-9 h-9 rounded-full border border-[#C8A45D]/40 flex items-center justify-center mb-5">
-                <svg className="w-4 h-4 text-[#C8A45D]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="12" y1="8" x2="12" y2="12" />
-                  <line x1="12" y1="16" x2="12.01" y2="16" />
-                </svg>
-              </div>
-              <h3 className="font-serif text-lg mb-3 tracking-tight text-[#C8A45D]">Said honestly</h3>
-              <p className="text-zinc-400 text-sm leading-relaxed font-light">
-                A research prototype, not legal advice. Results are similarity matches from a pilot
-                dataset of about one hundred case summaries - a starting point for a lawyer's
-                review, never a prediction of what a real court will decide.
-              </p>
-            </div>
-          </div>
+            ))}          </div>
         </div>
       </section>
 
@@ -154,7 +136,7 @@ const LandingSections = ({ onGetStarted, onPreviewDemo }) => {
               NyayVivek
             </span>
             <p className="text-zinc-600 text-[10px] font-mono tracking-widest uppercase text-center">
-              AI-assisted legal research prototype - academic demonstration only - not legal advice
+              AI-assisted research prototype - similarity matches from a small pilot dataset - academic demonstration only - not legal advice
             </p>
           </div>
         </footer>
