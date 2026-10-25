@@ -101,7 +101,7 @@ const Auth = ({ setShowLogin }) => {
               onClick={() => setShowLogin ? setShowLogin(false) : navigate("/")}
               className="absolute top-7 left-5 text-gray-400 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
             >
-              â Go Back
+              ← Go Back
             </button>
 
             <h2 className="text-2xl font-serif font-bold text-center text-white mt-10 mb-3 tracking-wide">
@@ -185,7 +185,7 @@ const Auth = ({ setShowLogin }) => {
               onClick={() => setShowLogin ? setShowLogin(false) : navigate("/")}
               className="absolute top-7 left-5 text-gray-400 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
             >
-              â Go Back
+              ← Go Back
             </button>
 
             <h2 className="text-2xl font-serif font-bold text-center text-white mt-10 mb-3 tracking-wide">
