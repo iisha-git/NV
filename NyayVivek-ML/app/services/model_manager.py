@@ -80,6 +80,28 @@ class ModelManager:
         text = re.sub(r'\s+', ' ', text)
         return text.strip()
 
+
+    def _chunk_text(self, text: str, window_tokens: int = 200, overlap_tokens: int = 20) -> list:
+        """
+        Splits long merged case text into overlapping TOKEN windows using the
+        model's own tokenizer, so every chunk re-tokenizes within the model's
+        256 word-piece limit (200 content tokens + specials gives margin for
+        legal names and multilingual text) and no content is silently truncated.
+        Short texts return as a single chunk and behave exactly as before.
+        """
+        tokenizer = self.model.tokenizer
+        token_ids = tokenizer(text, add_special_tokens=False)["input_ids"]
+        if len(token_ids) + 2 <= self.model.max_seq_length:
+            return [text]
+        chunks = []
+        step = window_tokens - overlap_tokens
+        for start in range(0, len(token_ids), step):
+            window = token_ids[start:start + window_tokens]
+            chunks.append(tokenizer.decode(window, skip_special_tokens=True))
+            if start + window_tokens >= len(token_ids):
+                break
+        return chunks
+
     def _normalize_law(self, law: str) -> str:
         """
         Standardizes legal sections / IPC abbreviations for high-quality comparisons.
@@ -106,28 +128,43 @@ class ModelManager:
     def smart_retrieval(self, query: str, top_k: int = 5):
         """
         Model Flow:
-        1. Encodes the client case brief query into a 384-dimensional dense semantic vector.
-        2. Executes a highly performant Euclidean distance similarity search inside the FAISS index.
-        3. Converts distance scores to Cosine Similarity metrics.
-        4. Filters outliers below a cosine confidence threshold of 0.45.
+        1. Splits the query into 256-token-sized chunks (single chunk for short
+           queries, preserving original behavior exactly).
+        2. Encodes chunks and executes a FAISS Euclidean search per chunk.
+        3. Merges candidates across chunks keeping each case's best (lowest)
+           distance, so long documents get complete coverage.
+        4. Converts distances with the same 1/(1+d) metric and the same 0.45
+           confidence threshold as before.
         """
         if not self._initialized:
             raise RuntimeWarning("ModelManager is not initialized yet. Call initialize() first.")
 
-        # Encode user query
-        query_embedding = self.model.encode([query])
+        chunks = self._chunk_text(query)
+        query_embeddings = self.model.encode(chunks)
 
-        # FAISS search on saved embeddings
+        # FAISS search on saved embeddings (one search per chunk)
         D, I = self.index.search(
-            np.array(query_embedding).astype('float32'),
+            np.array(query_embeddings).astype('float32'),
             k=top_k
         )
+
+        # Merge candidates across chunks: keep best distance per case
+        best_distance = {}
+        for chunk_row in range(len(chunks)):
+            for dist, idx in zip(D[chunk_row], I[chunk_row]):
+                if idx < 0:
+                    continue
+                if idx not in best_distance or dist < best_distance[idx]:
+                    best_distance[idx] = dist
+
+        # Rank merged candidates by best distance (same ordering as original)
+        ranked = sorted(best_distance.items(), key=lambda kv: kv[1])[:top_k]
 
         retrieved_indices = []
         retrieved_scores = []
 
         # Convert L2 distances to cosine similarity metrics and filter
-        for score, idx in zip(D[0], I[0]):
+        for idx, score in ranked:
             similarity = 1 / (1 + score)
             if similarity >= 0.45:
                 retrieved_indices.append(idx)
@@ -136,7 +173,7 @@ class ModelManager:
         if len(retrieved_indices) == 0:
             return None, None, None, None
 
-        dominant_type = self._get_dominant_case_type(I[0])
+        dominant_type = self._get_dominant_case_type([idx for idx, _ in ranked])
 
         return self.df, retrieved_indices, retrieved_scores, dominant_type
 

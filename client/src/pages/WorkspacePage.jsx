@@ -77,7 +77,7 @@ const WorkspacePage = () => {
 
     try {
       // Step 4 MERN axios trigger
-      const response = await axios.post(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers/compile`, formData, {
+      const response = await axios.post(`${import.meta.env.VITE_API_URL || ""}/api/dossiers/compile`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data"

@@ -42,10 +42,8 @@ const Auth = ({ setShowLogin }) => {
         console.log(error.response.data);
         showToast(error.response.data.message || "Invalid credentials. Please try again.", "error");
       } else {
-        console.log("Server offline, redirecting to workspace via secure offline mode.");
-        login({ email, name: "Advocate Counsel" });
-        setShowLogin(false);
-        navigate("/workspace");
+        console.log("Server unreachable:", error.message);
+        showToast("Cannot reach the NyayVivek server. Check that the backend is running and try again.", "error");
       }
     }
   };
@@ -78,10 +76,8 @@ const Auth = ({ setShowLogin }) => {
         console.log(error.response.data);
         showToast(error.response.data.message || "Registration failed. Please try again.", "error");
       } else {
-        console.log("Server offline, redirecting to workspace via secure offline mode.");
-        login({ email: registerEmail, name: name || "Advocate Counsel" });
-        setShowLogin(false);
-        navigate("/workspace");
+        console.log("Server unreachable:", error.message);
+        showToast("Cannot reach the NyayVivek server. Check that the backend is running and try again.", "error");
       }
     }
   };

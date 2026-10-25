@@ -39,7 +39,7 @@ const DashboardPage = () => {
         return;
       }
       try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_URL || ""}/api/dossiers`, {
           withCredentials: true
         });
         if (response.data && response.data.success && response.data.dossiers && response.data.dossiers.length > 0) {
@@ -138,7 +138,7 @@ const DashboardPage = () => {
   const executeDeleteCase = async () => {
     setShowDeleteConfirm(false);
     try {
-      await axios.delete(`${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers/${activeCase.id}`, {
+      await axios.delete(`${import.meta.env.VITE_API_URL || ""}/api/dossiers/${activeCase.id}`, {
         withCredentials: true
       });
       
@@ -654,7 +654,7 @@ const DashboardPage = () => {
                               const isRealFile = isSyntheticPreview ? true : (file.id && !file.id.startsWith('file-'));
                               const downloadUrl = isSyntheticPreview
                                 ? `/samples/${file.name}`
-                                : `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/dossiers/${activeCase.id}/files/${file.id}`;
+                                : `${import.meta.env.VITE_API_URL || ""}/api/dossiers/${activeCase.id}/files/${file.id}`;
                               
                               return (
                                 <tr
