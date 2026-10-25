@@ -51,7 +51,20 @@ az containerapp create -n "$WEB" -g "$RG" --environment "$ENV" --image "$IMG_WEB
             ACCESS_TOKEN_SECRET=secretref:access-token-secret REFRESH_TOKEN_SECRET=secretref:refresh-token-secret \
             CLIENT_URL=same-origin ML_SERVICE_URL="https://$ML_FQDN" -o none
 
+# Mount the persistent uploads volume on the web app (merge into live spec:
+# a bare yaml update would replace the container entry and drop image/env)
+az containerapp show -n "$WEB" -g "$RG" -o yaml > /tmp/web-app.yaml
+python3 - <<'PY'
+import yaml
+d = yaml.safe_load(open('/tmp/web-app.yaml'))
+t = d['properties']['template']
+t['volumes'] = [{'name': 'uploads', 'storageType': 'AzureFile', 'storageName': 'uploads'}]
+c = t['containers'][0]
+c['volumeMounts'] = [{'volumeName': 'uploads', 'mountPath': '/app/server/uploads'}]
+yaml.safe_dump(d, open('/tmp/web-app.yaml', 'w'))
+PY
+az containerapp update -n "$WEB" -g "$RG" --yaml /tmp/web-app.yaml -o none
+
 az containerapp show -n "$WEB" -g "$RG" --query properties.configuration.ingress.fqdn -o tsv
-echo "Public URL above. Attach the uploads volume to $WEB (volume mount) via:"
-echo "  az containerapp update -n $WEB -g $RG --yaml web-volume.yaml"
-echo "TODO before demo: mount volume, upload a test PDF, verify dossier persists across a restart."
+echo "Public URL above. Post-deploy checks: register a demo user, upload a test PDF,"
+echo "verify the dossier persists across a scale-to-zero/restart cycle."
