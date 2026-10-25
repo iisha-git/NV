@@ -24,6 +24,45 @@ const WorkspacePage = () => {
   const [category, setCategory] = useState("Criminal Appeal (Homicide)");
   const [counselNotes, setCounselNotes] = useState("");
 
+  // Previously used form entries, stored in this browser only (never the PDFs).
+  const HISTORY_KEY = "nv_workspace_history_v1";
+  const [history, setHistory] = useState(() => {
+    try {
+      const raw = localStorage.getItem(HISTORY_KEY);
+      const parsed = raw ? JSON.parse(raw) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const saveHistoryEntry = (entry) => {
+    try {
+      const next = [entry, ...history.filter(h =>
+        !(h.caseTitle === entry.caseTitle && h.jurisdiction === entry.jurisdiction && h.category === entry.category)
+      )].slice(0, 8);
+      setHistory(next);
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+    } catch {
+      // storage unavailable (private mode) - remembering is optional, ignore
+    }
+  };
+
+  const applyHistoryEntry = (idx) => {
+    const h = history[idx];
+    if (!h) return;
+    setCaseTitle(h.caseTitle || "");
+    setJurisdiction(h.jurisdiction || "");
+    setCategory(h.category || "Criminal Appeal (Homicide)");
+    setCounselNotes(h.counselNotes || "");
+  };
+
+  const clearHistory = () => {
+    if (!window.confirm("Remove all saved form entries from this browser?")) return;
+    try { localStorage.removeItem(HISTORY_KEY); } catch { /* ignore */ }
+    setHistory([]);
+  };
+
   // UI state for analysis pipeline
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   const [analysisProgress, setAnalysisProgress] = useState(0);
@@ -78,6 +117,8 @@ const WorkspacePage = () => {
       clearInterval(progressInterval);
       setAnalysisProgress(100);
       setAnalysisStep("Analysis complete. Opening your dashboard...");
+
+      saveHistoryEntry({ caseTitle, jurisdiction, category, counselNotes, usedAt: Date.now() });
 
       setTimeout(() => {
         setIsAnalyzing(false);
@@ -152,6 +193,37 @@ const WorkspacePage = () => {
               <h2 className="text-lg font-serif text-white">About the case</h2>
             </div>
             <div className="flex flex-col gap-5">
+              {history.length > 0 && (
+                <div className="bg-zinc-900/40 border border-zinc-800 rounded-lg p-4">
+                  <div className="flex items-center justify-between gap-3 mb-2">
+                    <label className="block text-sm text-zinc-300 font-medium">Use a previous entry</label>
+                    <button
+                      type="button"
+                      onClick={clearHistory}
+                      className="text-xs text-zinc-500 hover:text-red-400 transition-colors cursor-pointer"
+                    >
+                      Clear saved entries
+                    </button>
+                  </div>
+                  <select
+                    value=""
+                    onChange={(e) => {
+                      if (e.target.value !== "") applyHistoryEntry(Number(e.target.value));
+                    }}
+                    className="w-full bg-zinc-950/60 border border-zinc-800 text-white text-sm p-3 rounded-lg focus:outline-none focus:border-[#C8A45D] transition-all cursor-pointer appearance-none [&>option]:bg-zinc-950"
+                  >
+                    <option value="">Choose an entry you used before...</option>
+                    {history.map((h, idx) => (
+                      <option key={idx} value={idx}>
+                        {h.caseTitle || "Untitled"}{h.jurisdiction ? ` - ${h.jurisdiction}` : ""}
+                      </option>
+                    ))}
+                  </select>
+                  <p className="text-xs text-zinc-500 mt-2">
+                    Saved in this browser only, after a completed analysis. Uploaded PDFs are never saved.
+                  </p>
+                </div>
+              )}
               <div>
                 <label className={labelCls}>Case title <span className="text-[#C8A45D]">*</span></label>
                 <input
