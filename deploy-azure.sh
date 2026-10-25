@@ -30,7 +30,7 @@ az storage account create -n "$STOR" -g "$RG" -l "$LOC" --sku Standard_LRS --kin
 STOR_KEY=$(az storage account keys list -n "$STOR" -g "$RG" --query "[0].value" -o tsv)
 az storage share create -n "$SHARE" --account-name "$STOR" --account-key "$STOR_KEY" -o none
 
-az containerapp env create -n "$ENV" -g "$RG" -l "$LOC" -o none
+az containerapp env create -n "$ENV" -g "$RG" -l "$LOC" --logs-destination none -o none
 az containerapp env storage set -n "$ENV" -g "$RG" --storage-name uploads \
   --azure-file-account-name "$STOR" --azure-file-account-key "$STOR_KEY" \
   --azure-file-share-name "$SHARE" --access-mode ReadWrite -o none
