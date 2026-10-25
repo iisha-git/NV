@@ -200,11 +200,14 @@ const HomePage = () => {
           </div>
         </div>
         )}
-        {showAuth && (
-          <Auth setShowLogin={setShowAuth} />
-        )}
-        
       </div>
+
+      {/* Auth overlay lives outside the fading hero container so it stays visible at any scroll position */}
+      {showAuth && (
+        <div className="fixed inset-0 z-[60] overflow-y-auto">
+          <Auth setShowLogin={setShowAuth} />
+        </div>
+      )}
 
       {/* 4. Peripheral HUD Editorial Elements (Movie Poster feel) */}
       <div
