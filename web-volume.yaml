@@ -1,0 +1,12 @@
+# Apply with: az containerapp update -n nyayvivek-web -g nyayvivek-demo-rg --yaml web-volume.yaml
+properties:
+  template:
+    volumes:
+      - name: uploads
+        storageType: AzureFile
+        storageName: uploads
+    containers:
+      - name: nyayvivek-web
+        volumeMounts:
+          - volumeName: uploads
+            mountPath: /app/server/uploads
