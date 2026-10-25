@@ -196,67 +196,7 @@ const HomePage = () => {
               An advanced AI-powered assistant for analyzing case documents, mapping connected evidence, and searching similar past legal judgments.
             </p>
 
-            {/* Interactive Luxury CTAs */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-5 mt-10 w-full sm:w-auto">
-
-              {/* PRIMARY GOLD GLOW BUTTON */}
-              <button
-                className="
-                  btn-gold-glow
-                  px-8
-                  py-4.5
-                  rounded-full
-                  bg-[#C8A45D]
-                  text-black
-                  font-semibold
-                  text-xs
-                  uppercase
-                  tracking-[0.25em]
-                  transition-all
-                  duration-500
-                  hover:scale-[1.03]
-                  hover:shadow-[0_0_35px_rgba(200,164,93,0.45)]
-                  pointer-events-auto
-                  cursor-pointer
-                "
-                onClick={() => {
-                  if (isAuthenticated) {
-                    navigate("/workspace");
-                  } else {
-                    setShowAuth(true);
-                  }
-                }}
-              >
-                Get Started
-              </button>
-
-              {/* SECONDARY BACKDROP BLUR BUTTON */}
-              <button
-                onClick={() => setShowDemo(true)}
-                className="
-                  px-8
-                  py-4.5
-                  rounded-full
-                  border
-                  border-[#C8A45D]/40
-                  text-[#C8A45D]
-                  backdrop-blur-md
-                  bg-[#C8A45D]/5
-                  text-xs
-                  uppercase
-                  tracking-[0.25em]
-                  font-semibold
-                  transition-all
-                  duration-500
-                  
-                  hover:scale-[1.03]
-                  pointer-events-auto
-                  cursor-pointer
-                "
-              >
-                Preview Demo
-              </button>
-            </div>
+            {/* Hero CTAs intentionally removed: actions live at the end of the page (LandingSections CTA) per user request. */}
           </div>
         </div>
         )}
