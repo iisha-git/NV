@@ -84,7 +84,7 @@ const Auth = ({ setShowLogin }) => {
 
   return (
     <>
-      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black relative overflow-hidden px-6 py-12">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center bg-black relative overflow-hidden px-6 py-12 pointer-events-auto">
       <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#C8A45D]/[0.06] rounded-full blur-[160px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-[#C8A45D]/[0.05] rounded-full blur-[160px] pointer-events-none" />
       <div className="relative z-10 flex flex-col items-center mb-10 select-none">
