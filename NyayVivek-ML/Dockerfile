@@ -27,6 +27,9 @@ RUN pip install --no-cache-dir --upgrade pip \
 # Copy the entire project into the container
 COPY . .
 
+# --- Bake the embedding model into the image (avoids HF download at every cold start) ---
+RUN python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+
 # --- Port ---
 # Railway injects the PORT env var dynamically
 EXPOSE 8000
