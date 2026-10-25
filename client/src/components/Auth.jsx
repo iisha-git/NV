@@ -33,7 +33,7 @@ const Auth = ({ setShowLogin }) => {
       console.log(response.data);
       const userData = response.data.user || { email, name: "Advocate Counsel" };
       login(userData);
-      setShowLogin(false);
+      setShowLogin?.(false);
       navigate("/workspace");
     } catch (error) {
       console.log(error);
@@ -67,7 +67,7 @@ const Auth = ({ setShowLogin }) => {
       console.log(response.data);
       const userData = response.data.user || { email: registerEmail, name: name || "Advocate Counsel" };
       login(userData);
-      setShowLogin(false);
+      setShowLogin?.(false);
       navigate("/workspace");
     } catch (error) {
       console.log(error);
@@ -98,10 +98,10 @@ const Auth = ({ setShowLogin }) => {
 
             <button
               type="button"
-              onClick={() => setShowLogin(false)}
+              onClick={() => setShowLogin ? setShowLogin(false) : navigate("/")}
               className="absolute top-7 left-5 text-gray-400 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
             >
-              ← Go Back
+              â Go Back
             </button>
 
             <h2 className="text-2xl font-serif font-bold text-center text-white mt-10 mb-3 tracking-wide">
@@ -182,10 +182,10 @@ const Auth = ({ setShowLogin }) => {
 
             <button
               type="button"
-              onClick={() => setShowLogin(false)}
+              onClick={() => setShowLogin ? setShowLogin(false) : navigate("/")}
               className="absolute top-7 left-5 text-gray-400 hover:text-[#c5a059] transition-all text-xs uppercase tracking-[0.2em] font-mono cursor-pointer"
             >
-              ← Go Back
+              â Go Back
             </button>
 
             <h2 className="text-2xl font-serif font-bold text-center text-white mt-10 mb-3 tracking-wide">
